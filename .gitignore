@@ -1,0 +1,8 @@
+out*
+rc*
+*pem
+*.tfstate
+*.backup
+*.hcl
+terraform*
+.terraform/*

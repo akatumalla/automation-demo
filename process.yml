@@ -1,0 +1,90 @@
+---
+- name: Go simple
+  vars:
+    ansible_python_interpreter: /usr/bin/python3 
+  become: true
+  hosts: all
+  tasks:
+  - name: Update all packages
+    apt:
+      upgrade: dist
+      update_cache: yes
+      cache_valid_time: 3600 
+  - apt:
+      name: python3
+      state: latest   
+  - apt:
+      name: python3-pip
+      state: latest
+  - name: Install boto3 and botocore with pip3 module
+    pip:
+      name:
+      - boto 
+      - boto3
+      - botocore
+      executable: pip3
+
+  - name:
+    shell: |
+      curl --request POST \
+      --url https://circleci.com/api/v2/project/gh/akatumalla/go-simple-server/pipeline \
+      --header 'Circle-Token: {{ token }}' \
+      --header 'content-type: application/json' \
+      --data '{"branch":"main"}'
+    register: resp
+
+  - name:
+    set_fact: 
+      pretty: "{{ item.stdout }}"
+    with_items:
+      - "{{ resp }}"
+  - name:
+    set_fact: 
+      number: "{{ pretty.number+2 }}"
+  - name:
+    debug: 
+      var: "{{ number }}"
+  - name: Pause 
+    # Pause for 5 minutes to build app cache.
+    pause:
+      seconds: 60
+
+  - name:
+    shell: |
+      curl --request GET \
+      --url https://circleci.com/api/v2/project/gh/akatumalla/go-simple-server/job/{{ number }} \
+      --header 'Circle-Token: f7653cfcbaf5727f82fff509e011435f1f8c54f7'
+    register: check
+  - name:
+    debug: 
+      msg: "{{ item.stdout }}"
+    with_items:
+      - "{{ check }}"
+  - name:
+    set_fact: 
+      pretty: "{{ item.stdout }}"
+    with_items:
+      - "{{ check }}"
+  - name:
+    debug: 
+      msg: "{{ pretty.status }}"
+
+  - name:
+    raw: echo "{{ pretty.status }}"
+    register: status
+    failed_when: status.stdout != "success\r\n"
+    
+  - name:  
+    aws_s3:
+      region: us-east-2
+      aws_access_key: "{{ awsaccess }}"
+      aws_secret_key: "{{ awssecret }}"
+      bucket: circle-ci-gobuild
+      object: circleci
+      dest: /home/ubuntu/circleci
+      mode: get
+      
+  - name:
+    shell: | 
+      chmod +x /home/ubuntu/circleci
+      nohup /home/ubuntu/./circleci &
