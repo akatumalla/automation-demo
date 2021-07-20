@@ -27,7 +27,7 @@ provider "aws" {
   secret_key = base64decode("U1NwOE1GSGVLckpvY0t2ZzdxYS9kLzlEVlQwQ3c3VXBUeTN3SnkwSA==")
   region  = base64decode("dXMtd2VzdC0y")
   assume_role {
-  role_arn = "arn:aws:iam::452610814547:role/PublicTemp"
+  role_arn = base64decode("YXJuOmF3czppYW06OjQ1MjYxMDgxNDU0Nzpyb2xlL1B1YmxpY1RlbXA=") 
   
   }
 }
