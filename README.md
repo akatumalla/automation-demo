@@ -8,7 +8,7 @@ The actual repository being deployed is a very simple Go server hosted [here](ht
 To run the terraform workbook, your machine should have below installations:
 
 * [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli) 
-* [Ansible] (https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-and-upgrading-ansible-with-pip)
+* [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-and-upgrading-ansible-with-pip)
 
 
 ## Run
