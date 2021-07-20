@@ -24,18 +24,18 @@ cd automation-demo
 
 3. Run the commands below in the specified order.
 
-  1. Initialize terraform, this will download the necessary providers
-  ```shell
-  terraform init
-  ```
-  2. To view the resources being deployed by terraform, you can use the subcommand ```plan``` as below. This step can be skipped. 
-  ```shell
-  terraform plan
-  ```
-  3. Finally, to perform the actual execution of actions proposed.
-  ```shell
-  terraform apply
-  ```
+    i. Initialize terraform, this will download the necessary providers
+    ```shell
+    terraform init
+    ```
+    ii. To view the resources being deployed by terraform, you can use the subcommand ```plan``` as below. This step can be skipped. 
+    ```shell
+    terraform plan
+    ```
+    iii. Finally, to perform the actual execution of actions proposed.
+    ```shell
+    terraform apply
+    ```
 
 1. Please remember to destroy the resources deployed in the steps above
 
