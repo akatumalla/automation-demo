@@ -131,6 +131,6 @@ resource "null_resource" "ansible_exec" {
 
 # output on screen
 output "public_ip" {
-  description = "Public IP address of the EC2 instance"
+  description = "Domain name, copy this"
   value       = aws_instance.app_server.public_dns
 }
